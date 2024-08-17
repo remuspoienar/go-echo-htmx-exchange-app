@@ -1,0 +1,33 @@
+version: "3"
+
+dotenv:
+  - .env
+
+tasks:
+  dev:
+    run: always
+    cmds:
+      - air
+  build:
+    deps:
+      - task: generate
+    cmds:
+      - CGO_ENABLED=0 go build -o out main.go
+
+  generate:
+    aliases:
+      - gen
+      - g
+    generates:
+      - templates/**/*.go
+      - views/**/*.go
+      - static/**/*.css
+    sources:
+      - templates/**/*.templ
+      - views/**/*.templ
+      - tailwind.config.js
+      - tailwind.css
+    cmds:
+      - npx tailwindcss build -i tailwind.css -o static/style.css
+      - templ generate
+      - go generate ./...

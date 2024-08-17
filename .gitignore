@@ -1,0 +1,7 @@
+.env
+out
+tmp
+.task
+node_modules
+.idea
+static/styles.css
